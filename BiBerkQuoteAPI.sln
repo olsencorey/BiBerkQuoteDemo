@@ -1,0 +1,24 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BiBerkQuoteAPI", "BiBerkQuoteAPI.csproj", "{B1E663C3-857E-C3AA-69FB-BF84D3AF23AB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B1E663C3-857E-C3AA-69FB-BF84D3AF23AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1E663C3-857E-C3AA-69FB-BF84D3AF23AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1E663C3-857E-C3AA-69FB-BF84D3AF23AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1E663C3-857E-C3AA-69FB-BF84D3AF23AB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {762BA1EF-09B8-4F9D-861F-10575E71E5BC}
+	EndGlobalSection
+EndGlobal
