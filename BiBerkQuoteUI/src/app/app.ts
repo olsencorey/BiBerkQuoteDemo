@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+﻿import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
@@ -34,40 +34,41 @@ export class App {
     this.loading = true;
     this.errorMessage = '';
     this.wcResult = null;
-
-    this.http.post<QuoteResponse>(`${this.apiBase}/workerscomp`, this.wcRequest)
-      .subscribe({
-        next: res => {
-          this.wcResult = res;
-          this.loading = false;
-        },
-        error: err => {
-          this.errorMessage = 'Workers Comp error: ' + err.message;
-          this.loading = false;
-        }
-      });
+    const url = this.apiBase + '/workerscomp';
+    this.http.post<QuoteResponse>(url, this.wcRequest).subscribe({
+      next: (res) => {
+        this.wcResult = res;
+        this.loading = false;
+      },
+      error: (err) => {
+        this.errorMessage = 'Error: ' + err.message;
+        this.loading = false;
+      }
+    });
   }
 
   calculateBop(): void {
     this.loading = true;
     this.errorMessage = '';
     this.bopResult = null;
-
-    this.http.post<QuoteResponse>(`${this.apiBase}/bop`, this.bopRequest)
-      .subscribe({
-        next: res => {
-          this.bopResult = res;
-          this.loading = false;
-        },
-        error: err => {
-          this.errorMessage = 'BOP error: ' + err.message;
-          this.loading = false;
-        }
-      });
+    const url = this.apiBase + '/bop';
+    this.http.post<QuoteResponse>(url, this.bopRequest).subscribe({
+      next: (res) => {
+        this.bopResult = res;
+        this.loading = false;
+      },
+      error: (err) => {
+        this.errorMessage = 'Error: ' + err.message;
+        this.loading = false;
+      }
+    });
   }
 
-  get breakdownKeys(): string[] {
-    const result = this.activeTab === 'workerscomp' ? this.wcResult : this.bopResult;
-    return result ? Object.keys(result.breakdown) : [];
+  get wcBreakdownKeys(): string[] {
+    return this.wcResult ? Object.keys(this.wcResult.breakdown) : [];
+  }
+
+  get bopBreakdownKeys(): string[] {
+    return this.bopResult ? Object.keys(this.bopResult.breakdown) : [];
   }
 }

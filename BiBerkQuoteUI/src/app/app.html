@@ -1,108 +1,77 @@
-<div style="max-width:600px; margin:2rem auto; font-family:sans-serif;">
+﻿<div style="max-width:600px; margin:2rem auto; font-family:sans-serif;">
   <h1>BiBerk Quote Demo</h1>
-
-  <!-- Tab toggle -->
   <div style="margin-bottom:1rem;">
-    <button (click)="activeTab='workerscomp'" [style.fontWeight]="activeTab==='workerscomp' ? 'bold' : 'normal'">
-      Workers Comp
-    </button>
-    <button (click)="activeTab='bop'" [style.fontWeight]="activeTab==='bop' ? 'bold' : 'normal'" style="margin-left:.5rem;">
-      BOP
-    </button>
+    <button (click)="activeTab='workerscomp'" [style.fontWeight]="activeTab==='workerscomp' ? 'bold' : 'normal'">Workers Comp</button>
+    <button (click)="activeTab='bop'" [style.fontWeight]="activeTab==='bop' ? 'bold' : 'normal'" style="margin-left:.5rem;">BOP</button>
   </div>
-
-  <!-- Workers Comp -->
   <div *ngIf="activeTab === 'workerscomp'">
-    <h2>Workers' Compensation Quote</h2>
-
-    <label>Industry:
+    <h2>Workers Compensation Quote</h2>
+    <div style="margin-bottom:1rem;">
+      <span>Industry:</span><br>
       <select [(ngModel)]="wcRequest.industry">
         <option value="">Select...</option>
         <option value="office">Office</option>
         <option value="construction">Construction</option>
         <option value="retail">Retail</option>
       </select>
-    </label><br/><br/>
-
-    <label>Annual Payroll:
-      <input type="number" [(ngModel)]="wcRequest.payroll" />
-    </label><br/><br/>
-
-    <label>State:
-      <input type="text" [(ngModel)]="wcRequest.state" maxlength="2" placeholder="PA" />
-    </label><br/><br/>
-
-    <label>Experience Mod:
-      <input type="number" [(ngModel)]="wcRequest.experienceMod" step="0.01" />
-    </label><br/><br/>
-
-    <button (click)="calculateWorkersComp()" [disabled]="loading">
-      {{ loading ? 'Calculating...' : 'Calculate' }}
-    </button>
-
-    <!-- Result -->
+    </div>
+    <div style="margin-bottom:1rem;">
+      <span>Annual Payroll:</span><br>
+      <input type="number" [(ngModel)]="wcRequest.payroll">
+    </div>
+    <div style="margin-bottom:1rem;">
+      <span>State:</span><br>
+      <input type="text" [(ngModel)]="wcRequest.state" maxlength="2" placeholder="PA">
+    </div>
+    <div style="margin-bottom:1rem;">
+      <span>Experience Mod:</span><br>
+      <input type="number" [(ngModel)]="wcRequest.experienceMod" step="0.01">
+    </div>
+    <button (click)="calculateWorkersComp()" [disabled]="loading">{{ loading ? 'Calculating...' : 'Calculate' }}</button>
     <div *ngIf="wcResult" style="margin-top:1.5rem; padding:1rem; background:#f0f8ff; border:1px solid #ccc; border-radius:6px;">
       <h3>Estimated Annual Premium: {{ wcResult.annualPremium | currency }}</h3>
       <h4>Breakdown</h4>
-      <ul>
-        <li *ngFor="let key of breakdownKeys">
-          {{ key }}: {{ wcResult.breakdown[key] | currency }}
-        </li>
-      </ul>
+      <div *ngFor="let key of wcBreakdownKeys"><strong>{{ key }}:</strong> {{ wcResult.breakdown[key] | currency }}</div>
     </div>
   </div>
-
-  <!-- BOP -->
   <div *ngIf="activeTab === 'bop'">
-    <h2>Business Owner's Policy (BOP) Quote</h2>
-
-    <label>Industry:
+    <h2>Business Owners Policy (BOP) Quote</h2>
+    <div style="margin-bottom:1rem;">
+      <span>Industry:</span><br>
       <select [(ngModel)]="bopRequest.industry">
         <option value="">Select...</option>
         <option value="office">Office</option>
         <option value="retail">Retail</option>
         <option value="contractor">Contractor</option>
       </select>
-    </label><br/><br/>
-
-    <label>Annual Revenue:
-      <input type="number" [(ngModel)]="bopRequest.annualRevenue" />
-    </label><br/><br/>
-
-    <label>Building Value:
-      <input type="number" [(ngModel)]="bopRequest.buildingValue" />
-    </label><br/><br/>
-
-    <label>Contents Value:
-      <input type="number" [(ngModel)]="bopRequest.contentsValue" />
-    </label><br/><br/>
-
-    <label>Location Risk:
+    </div>
+    <div style="margin-bottom:1rem;">
+      <span>Annual Revenue:</span><br>
+      <input type="number" [(ngModel)]="bopRequest.annualRevenue">
+    </div>
+    <div style="margin-bottom:1rem;">
+      <span>Building Value:</span><br>
+      <input type="number" [(ngModel)]="bopRequest.buildingValue">
+    </div>
+    <div style="margin-bottom:1rem;">
+      <span>Contents Value:</span><br>
+      <input type="number" [(ngModel)]="bopRequest.contentsValue">
+    </div>
+    <div style="margin-bottom:1rem;">
+      <span>Location Risk:</span><br>
       <select [(ngModel)]="bopRequest.locationRisk">
         <option value="">Select...</option>
         <option value="low">Low</option>
         <option value="medium">Medium</option>
         <option value="high">High</option>
       </select>
-    </label><br/><br/>
-
-    <button (click)="calculateBop()" [disabled]="loading">
-      {{ loading ? 'Calculating...' : 'Calculate' }}
-    </button>
-
-    <!-- Result -->
-    <div *ngIf="bopResult" style="margin-top:1.5rem; padding:1rem; background:#f0fff0; border:1px solid #ccc; border-radius:6px;">
+    </div>
+    <button (click)="calculateBop()" [disabled]="loading">{{ loading ? 'Calculating...' : 'Calculate' }}</button>
+    <div *ngIf="bopResult" style="margin-top:1.5rem; padding:1rem; background:#f0f8ff; border:1px solid #ccc; border-radius:6px;">
       <h3>Estimated Annual Premium: {{ bopResult.annualPremium | currency }}</h3>
       <h4>Breakdown</h4>
-      <ul>
-        <li *ngFor="let key of breakdownKeys">
-          {{ key }}: {{ bopResult.breakdown[key] | currency }}
-        </li>
-      </ul>
+      <div *ngFor="let key of bopBreakdownKeys"><strong>{{ key }}:</strong> {{ bopResult.breakdown[key] | currency }}</div>
     </div>
   </div>
-
-  <p *ngIf="errorMessage" style="color:red; margin-top:1rem;">
-    {{ errorMessage }}
-  </p>
+  <p *ngIf="errorMessage" style="color:red;">{{ errorMessage }}</p>
 </div>
