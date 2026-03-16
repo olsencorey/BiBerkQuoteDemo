@@ -1,7 +1,8 @@
 ﻿import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
+import { ChangeDetectorRef } from '@angular/core';
 
 type QuoteResponse = {
   annualPremium: number;
@@ -11,7 +12,7 @@ type QuoteResponse = {
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, FormsModule, HttpClientModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './app.html',
 })
 export class App {
@@ -28,7 +29,7 @@ export class App {
 
   private apiBase = 'http://localhost:5205/api/quotes';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private cdr: ChangeDetectorRef) { }
 
   calculateWorkersComp(): void {
     this.loading = true;
@@ -39,10 +40,12 @@ export class App {
       next: (res) => {
         this.wcResult = res;
         this.loading = false;
+        this.cdr.detectChanges();
       },
       error: (err) => {
         this.errorMessage = 'Error: ' + err.message;
         this.loading = false;
+        this.cdr.detectChanges();
       }
     });
   }
@@ -56,10 +59,12 @@ export class App {
       next: (res) => {
         this.bopResult = res;
         this.loading = false;
+        this.cdr.detectChanges();
       },
       error: (err) => {
         this.errorMessage = 'Error: ' + err.message;
         this.loading = false;
+        this.cdr.detectChanges();
       }
     });
   }
